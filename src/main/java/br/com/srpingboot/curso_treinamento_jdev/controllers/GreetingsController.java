@@ -23,33 +23,9 @@ public class GreetingsController {
     @Autowired /*IC/CD ou CDI - Injeção de dependência*/
     private UsuarioRepository usuarioRepository;
 
-    /* */
-
-    /**
-     * @param name the name to greet
-     * @return greeting text
-     *//*
-    @RequestMapping(value = "/mostrarnome/{name}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String greetingText(@PathVariable String name) {
-        return "Curso Spring Boot API: " + name + "!";
-    }
-
-    @RequestMapping(value = "/olamundo/{nome}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String retornaOlaMundo(@PathVariable String nome) {
-
-        Usuario usuario = new Usuario();
-        usuario.setNome(nome);
-        usuarioRepository.save(usuario);    *//*Vai gravar no banco de dados*//*
-
-
-        return "Ola mundo " + nome;
-    }
-*/
 
     // METODO LISTAR TODOS OS USUARIOS
-    @GetMapping(value = "listatodos")
+    @GetMapping(value = "listarTodos")
     @ResponseBody /*Retorna os dados para o corpo da resposta*/
     public ResponseEntity<List<Usuario>> listaUsuario() {
 
@@ -84,9 +60,9 @@ public class GreetingsController {
     }
 
     //METODO PARA LOCALIZAR USUÁRIO PELO ID
-    @GetMapping(value = "buscaruserid")  //Mapeia a url
+    @GetMapping(value = "buscarUserId")  //Mapeia a url
     @ResponseBody //Descrição da resposta
-    public ResponseEntity<?> buscaruserid(@RequestParam(name = "iduser") Long iduser) {  // Recebe dados para
+    public ResponseEntity<?> buscarUserId(@RequestParam(name = "iduser") Long iduser) {  // Recebe dados para
         // consultar
 
         usuarioService.verificarSeIdFoiInformado(iduser);
@@ -108,19 +84,15 @@ public class GreetingsController {
         return new ResponseEntity<Usuario>(usuarioAtualizado, HttpStatus.OK);
     }
 
-//    //METODO PARA LOCALIZAR USUÁRIO POR PARTE DO NOME
-//
-//    @GetMapping(value = "buscaruserid")  //Mapeia a url
-//    @ResponseBody //Descrição da resposta
-//    public ResponseEntity<?> buscaruserid(@RequestParam(name = "iduser") Long iduser) {  // Recebe dados para
-//        // consultar
-//
-//        usuarioService.verificarSeIdFoiInformado(iduser);
-//        usuarioService.verificarSeUsuarioExiste(iduser);
-//
-//        Usuario usuarioEncontrado = usuarioRepository.findById(iduser).get();
-//        return new ResponseEntity<Usuario>(usuarioEncontrado, HttpStatus.OK);
-//    }
+    //METODO PARA LOCALIZAR USUÁRIO POR PARTE DO NOME
+
+    @GetMapping(value = "buscarPorNome")  //Mapeia a url
+    @ResponseBody //Descrição da resposta
+    public ResponseEntity<List<Usuario>> buscarPorNome(@RequestParam(name = "name") String name) {
+
+        List<Usuario> usuarioEncontrado = usuarioRepository.buscarPorNome(name);
+        return new ResponseEntity<List<Usuario>>(usuarioEncontrado, HttpStatus.OK);
+    }
 
 
 }
