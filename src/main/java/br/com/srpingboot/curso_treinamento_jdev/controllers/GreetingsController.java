@@ -46,7 +46,6 @@ public class GreetingsController {
     public ResponseEntity<List<Usuario>> listaUsuario() {
 
         List<Usuario> usuarios = usuarioRepository.findAll(); /*Executa a consulta no banco de dados*/
-
         return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK); /*Retorna a lista em JSON*/
     }
 
@@ -58,7 +57,6 @@ public class GreetingsController {
 
 
         Usuario user = usuarioRepository.save(usuario);
-
         return new ResponseEntity<Usuario>(user, HttpStatus.CREATED);
     }
 
@@ -69,19 +67,17 @@ public class GreetingsController {
 
 
         usuarioRepository.deleteById(iduser);
-
         return new ResponseEntity<String>("User deletado com sucesso", HttpStatus.OK);
     }
 
     //METODO PARA LOCALIZAR USUÁRIO PELO ID
-    @DeleteMapping(value = "delete")  //Mapeia a url
+    @GetMapping(value = "buscaruserid")  //Mapeia a url
     @ResponseBody //Descrição da resposta
-    public ResponseEntity<String> delete(@RequestParam Long iduser) { //Recebe os dados para deletar
+    public ResponseEntity<Usuario> buscaruserid(@RequestParam(name = "iduser") Long iduser) {  // Recebe dados para
+        // consultar
 
-
-        usuarioRepository.deleteById(iduser);
-
-        return new ResponseEntity<String>("User deletado com sucesso", HttpStatus.OK);
+        Usuario usuario = usuarioRepository.findById(iduser).get();
+        return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
 
 
