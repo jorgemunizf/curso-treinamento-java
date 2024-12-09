@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * A sample greetings controller to return greeting text
@@ -31,7 +30,7 @@ public class GreetingsController {
 
 
         List<Usuario> usuarios = usuarioRepository.findAll(); /*Executa a consulta no banco de dados*/
-        return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK); /*Retorna a lista em JSON*/
+        return new ResponseEntity<>(usuarios, HttpStatus.OK); /*Retorna a lista em JSON*/
     }
 
 
@@ -44,7 +43,7 @@ public class GreetingsController {
 //        usuarioService.verificarSeUsuarioExiste(usuario.getId());
 
         Usuario user = usuarioRepository.save(usuario);
-        return new ResponseEntity<Usuario>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     //METODO PARA DELETAR USUÁRIO
@@ -56,7 +55,7 @@ public class GreetingsController {
         usuarioService.verificarSeUsuarioExiste(iduser);
 
         usuarioRepository.deleteById(iduser);
-        return new ResponseEntity<String>("User deletado com sucesso", HttpStatus.OK);
+        return new ResponseEntity<>("User deletado com sucesso", HttpStatus.OK);
     }
 
     //METODO PARA LOCALIZAR USUÁRIO PELO ID
@@ -69,7 +68,7 @@ public class GreetingsController {
         usuarioService.verificarSeUsuarioExiste(iduser);
 
         Usuario usuarioEncontrado = usuarioRepository.findById(iduser).get();
-        return new ResponseEntity<Usuario>(usuarioEncontrado, HttpStatus.OK);
+        return new ResponseEntity<>(usuarioEncontrado, HttpStatus.OK);
     }
 
     // METODO PARA ATUALIZAR USUÁRIO
@@ -81,7 +80,7 @@ public class GreetingsController {
         usuarioService.verificarSeUsuarioExiste(usuario.getId());
 
         Usuario usuarioAtualizado = usuarioRepository.saveAndFlush(usuario);
-        return new ResponseEntity<Usuario>(usuarioAtualizado, HttpStatus.OK);
+        return new ResponseEntity<>(usuarioAtualizado, HttpStatus.OK);
     }
 
     //METODO PARA LOCALIZAR USUÁRIO POR PARTE DO NOME
@@ -91,7 +90,7 @@ public class GreetingsController {
     public ResponseEntity<List<Usuario>> buscarPorNome(@RequestParam(name = "name") String name) {
 
         List<Usuario> usuarioEncontrado = usuarioRepository.buscarPorNome(name);
-        return new ResponseEntity<List<Usuario>>(usuarioEncontrado, HttpStatus.OK);
+        return new ResponseEntity<>(usuarioEncontrado, HttpStatus.OK);
     }
 
 
