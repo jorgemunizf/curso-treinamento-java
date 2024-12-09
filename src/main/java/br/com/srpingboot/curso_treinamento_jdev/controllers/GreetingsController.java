@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A sample greetings controller to return greeting text
@@ -85,12 +86,19 @@ public class GreetingsController {
     @ResponseBody //Descrição da resposta
     public ResponseEntity<?> atualizar(@RequestBody Usuario usuario) { //Recebe os dados para atualizar
 
+        // Verifica se o ID foi informado
         if (usuario.getId() == null) {
             return new ResponseEntity<String>("Id não foi informado para atualizar", HttpStatus.OK);
         }
 
-        Usuario user = usuarioRepository.saveAndFlush(usuario);
-        return new ResponseEntity<Usuario>(user, HttpStatus.OK);
+        // Verificar se existe o usuário no banco de dados
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(usuario.getId());
+        if (usuarioExistente.isEmpty()) {
+            return new ResponseEntity<String>("Usuário não encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        Usuario usuarioAtualizado = usuarioRepository.saveAndFlush(usuario);
+        return new ResponseEntity<Usuario>(usuarioAtualizado, HttpStatus.OK);
     }
 
 
