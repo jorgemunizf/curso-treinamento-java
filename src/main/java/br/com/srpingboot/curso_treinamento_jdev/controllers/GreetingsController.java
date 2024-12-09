@@ -80,5 +80,15 @@ public class GreetingsController {
         return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
 
+    // METODO PARA ATUALIZAR USUÁRIO
+    @PutMapping(value = "atualizar")  //Mapeia a url
+    @ResponseBody //Descrição da resposta
+    public ResponseEntity<Usuario> atualizar(@RequestBody Usuario usuario) { //Recebe os dados para atualizar
+
+
+        Usuario user = usuarioRepository.saveAndFlush(usuario);
+        return new ResponseEntity<Usuario>(user, HttpStatus.OK);
+    }
+
 
 }
